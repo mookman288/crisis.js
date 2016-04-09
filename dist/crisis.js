@@ -42,11 +42,21 @@ crisis.prototype.inputs		=	['input[type=text]', 'textarea'];
 //Which strings should be searched for. 
 crisis.prototype.search		=	{
 		'suicide':	{
-			'combinations': {
-				'primary': ['kill', 'kills', 'hurt', 'hurts', 'cut', 'cuts'],
-				'secondary': ['myself', 'herself', 'himself']
-			}, 
-			'strings': ['want to die', 'wants to die']
+			'combinations': [
+				{
+					'primary': ['kill', 'hurt', 'cut'],
+					'secondary': ['myself', 'herself', 'himself']
+				},
+				{
+					'primary': ['commit', 'committing'],
+					'secondary': ['suicide']
+				}, 
+				{
+					'primary': ['want'],
+					'secondary': ['to die']
+				}
+			],
+			'strings': []
 		}
 };
 
@@ -83,18 +93,22 @@ crisis.prototype.buildRegex	=	(function() {
 		
 		//If there are combinations.
 		if (typeof this.search[key].combinations === 'object') {
-			//For each primary combination.
-			for (var i = 0; i < this.search[key].combinations.primary.length; i++) {
-				//For each secondary combination.
-				for (var n = 0; n < this.search[key].combinations.secondary.length; n++) {
-					//Add the regular expression to list of regular expressions. 
-					this.regex[key].push(
-							new RegExp(
-									this.search[key].combinations.primary[i].replace(/\s+/, "\\s+") + 
-									'\\s+' + 
-									this.search[key].combinations.secondary[n].replace(/\s+/, "\\s+"), 
-							'i')
-					)
+			//For each set of combinations.
+			for (var set = 0; set < this.search[key].combinations.length; set++) {
+				//For each primary combination.
+				for (var i = 0; i < this.search[key].combinations[set].primary.length; i++) {
+					//For each secondary combination.
+					for (var n = 0; n < this.search[key].combinations[set].secondary.length; n++) {
+						//Add the regular expression to list of regular expressions. 
+						this.regex[key].push(
+								new RegExp(
+										this.search[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
+										's?' + //Support for trailing s. 
+										'\\s+' + //Any whitespace. 
+										this.search[key].combinations[set].secondary[n].replace(/\s+/, "\\s+"), 
+								'gi')
+						)
+					}
 				}
 			}
 		}

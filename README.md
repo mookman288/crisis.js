@@ -10,6 +10,11 @@ Crisis is an every day occurrence. It may be possible, for a few kb per page, to
 or otherwise save a life. This library is a proof of concept to see if it's possible to build a system that can detect pain 
 in users and help them wherever possible. 
 
+###Notes
+
+* Primary combination sets are also checked for an optional `s` at the end. That means `hurt` will also check for `hurts`. 
+* The pop-up will not reactivate on that input regardless of whether the user says "OK" or "Cancel." 
+
 ###License
 ####The MIT License (MIT)
 

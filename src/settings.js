@@ -7,11 +7,21 @@ crisis.prototype.inputs		=	['input[type=text]', 'textarea'];
 //Which strings should be searched for. 
 crisis.prototype.search		=	{
 		'suicide':	{
-			'combinations': {
-				'primary': ['kill', 'kills', 'hurt', 'hurts', 'cut', 'cuts'],
-				'secondary': ['myself', 'herself', 'himself']
-			}, 
-			'strings': ['want to die', 'wants to die']
+			'combinations': [
+				{
+					'primary': ['kill', 'hurt', 'cut'],
+					'secondary': ['myself', 'herself', 'himself']
+				},
+				{
+					'primary': ['commit', 'committing'],
+					'secondary': ['suicide']
+				}, 
+				{
+					'primary': ['want'],
+					'secondary': ['to die']
+				}
+			],
+			'strings': []
 		}
 };
 
