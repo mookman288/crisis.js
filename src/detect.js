@@ -11,9 +11,8 @@ crisis.prototype.detect		=	(function(uid) {
 			
 			//For each regular expression.
 			for (var i = 0; i < this.regex[key].length; i++) { 
-				
 				//Test this string.
-				if (this.nodes[uid].input.value.search(this.regex[key][i])) {
+				if (this.nodes[uid].input.value.search(this.regex[key][i]) > 0) {
 					//Create a prompt.
 					if (confirm(crisis.helpString[key])) {
 						//Open a new window and focus. 
