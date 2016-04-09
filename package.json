@@ -1,0 +1,24 @@
+{
+	"name": "crisis.js",
+	"version": "0.0.1",
+	"description": "A library designed to provide helpful tooltips for individuals experiencing crisis.",
+	"main": "index.js",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mookman288/crisis.js.git"
+	},
+	"author": "PxO Ink",
+	"license": "MIT",
+	"dependencies": {
+		"browser-sync": "2.11.2", 
+		"gulp": "3.9.1",
+		"gulp-concat": "2.6.0", 
+		"gulp-if": "1.2.5", 
+		"gulp-jshint": "2.0.0", 
+		"gulp-notify": "2.2.0",
+		"gulp-rename": "1.2.2", 
+		"gulp-uglify": "1.5.1", 
+		"yargs": "3.19.0"
+	}
+}

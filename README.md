@@ -1,4 +1,17 @@
-The MIT License (MIT)
+#crisis.js
+##A library for websites that encounter individuals experiencing crisis
+
+**Note:** This is a **proof of concept** library that is **not** intended for production environments. You, and your users 
+agree not to hold this library, or its author, liable for its use. 
+
+###Purpose
+
+Crisis is an every day occurrence. It may be possible, for a few kb per page, to intervene and prevent a death, prevent abuse, 
+or otherwise save a life. This library is a proof of concept to see if it's possible to build a system that can detect pain 
+in users and help them wherever possible. 
+
+###License
+####The MIT License (MIT)
 
 Copyright (c) 2016 PxO Ink
 
