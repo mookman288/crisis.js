@@ -48,7 +48,7 @@ crisis.prototype.search		=	{
 					'secondary': ['myself', 'herself', 'himself']
 				},
 				{
-					'primary': ['commit', 'committing'],
+					'primary': ['commit'],
 					'secondary': ['suicide']
 				}, 
 				{

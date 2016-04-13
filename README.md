@@ -10,10 +10,26 @@ Crisis is an every day occurrence. It may be possible, for a few kb per page, to
 or otherwise save a life. This library is a proof of concept to see if it's possible to build a system that can detect pain 
 in users and help them wherever possible. 
 
-###Notes
+###How It Works
 
-* Primary combination sets are also checked for an optional `s` at the end. That means `hurt` will also check for `hurts`. 
-* The pop-up will not reactivate on that input regardless of whether the user says "OK" or "Cancel." 
+When a user enters one of any number of strings that triggers a regular expression match, they will be greeted with a basic 
+JavaScript prompt that asks them whether they would like help. If they choose to select "OK", they will be sent to a one of 
+the appropriate resources assigned to a particular category of crisis. Whether they select "OK" or "Cancel" the pop-up will 
+not reactivate on that input until the page is refreshed. 
+
+###Settings
+
+Please refer to the `settings.js` file in the `src` directory for a complete list of settings that can be passed in. 
+
+###Regular Expressions
+
+Combinations of sets are designed to use regular expressions to appropriately trigger help. For instance, if someone writes `I 
+am thinking about committing suicide` it will trigger just as much as `I will commit suicide` or `he cuts himself`. 
+
+###Contribution
+
+Contribution is welcomed, especially for brainstorming a way to easily implement translations and geo-targeted help, while 
+keeping the file-size low. 
 
 ###License
 ####The MIT License (MIT)
