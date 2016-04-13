@@ -22,11 +22,12 @@ crisis.prototype.buildRegex	=	(function() {
 						this.regex[key].push(
 								new RegExp(
 										this.search[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
-										's?' + //Support for trailing s. 
+										'[e|s|d|es|ed|ing|ting]*' + //Support for multiple words.
 										'\\s+' + //Any whitespace. 
-										this.search[key].combinations[set].secondary[n].replace(/\s+/, "\\s+"), 
+										this.search[key].combinations[set].secondary[n].replace(/\s+/, "\\s+") + 
+										'[e|s|d|es|ed|ing|ting]*', //Support for multiple words.
 								'gi')
-						)
+						);
 					}
 				}
 			}

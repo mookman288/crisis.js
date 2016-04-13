@@ -42,7 +42,7 @@ crisis.prototype.inputs		=	['input[type=text]', 'textarea'];
 //Which strings should be searched for. 
 crisis.prototype.search		=	{
 		'suicide':	{
-			'combinations': [
+			'combinations':	[
 				{
 					'primary': ['kill', 'hurt', 'cut'],
 					'secondary': ['myself', 'herself', 'himself']
@@ -52,22 +52,57 @@ crisis.prototype.search		=	{
 					'secondary': ['suicide']
 				}, 
 				{
-					'primary': ['want'],
-					'secondary': ['to die']
+					'primary': ['end it'], 
+					'secondary': ['all', 'now']
 				}
-			],
-			'strings': []
+			], 
+			'strings':		['want to die']
+		}, 
+		'ipv': {
+			'combinations':	[
+ 				{
+					'primary': ['hit', 'beat', 'cut', 'abus', 'stalk', 'hurt'],
+					'secondary': ['me', 'her', 'him']
+				}, 
+				{
+					'primary': ['am', "i'm", 'is', "he's", "she's", 'are', "they're"], 
+					'secondary': ['scared', 'afraid', 'terrified']
+				}, 
+				{
+					'primary': ['been', 'be', 'is'], 
+					'secondary': ['beat', 'cut', 'abus', 'stalk', 'hurt']
+				}
+			]
+		}, 
+		'sar': {
+			'combinations':	[
+  				{
+ 					'primary': ['rap', 'touch', 'grop', 'fondl'],
+ 					'secondary': ['me', 'her', 'him']
+ 				}, 
+ 				{
+ 					'primary': ['been', 'be', 'is'],
+ 					'secondary': ['rap', 'touch', 'grop', 'fondl']
+ 				}, 
+ 			],
 		}
 };
 
+//What the response template should be if a match is found.
+crisis.prototype.template	=	'Would you like help for you, or someone you know,';
+
 //What the response string should be if a match is found. 
 crisis.prototype.helpString	=	{
-		'suicide':	'Would you like help for you, or someone you know, who is in danger of committing suicide?'
+		'suicide':	'who is in danger of hurting themselves or committing suicide?', 
+		'ipv':		'who is suffering from intimate, emotional, or physical abuse or violence?', 
+		'sar':		'who has experienced sexual assault, rape, or inappropriate contact?'
 };
 
 //Where the prompt should take the user if they agree. 
 crisis.prototype.redirects	=	{
-		'suicide':	'http://www.suicide.org/if-you-are-suicidal.html'
+		'suicide':	'http://www.suicide.org/if-you-are-suicidal.html', 
+		'ipv':		'http://www.thehotline.org/help/', 
+		'sar':		'https://rainn.org/get-help'
 };
 
 //The amount of time to wait before searching. 
@@ -103,11 +138,12 @@ crisis.prototype.buildRegex	=	(function() {
 						this.regex[key].push(
 								new RegExp(
 										this.search[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
-										's?' + //Support for trailing s. 
+										'[e|s|d|es|ed|ing|ting]*' + //Support for multiple words.
 										'\\s+' + //Any whitespace. 
-										this.search[key].combinations[set].secondary[n].replace(/\s+/, "\\s+"), 
+										this.search[key].combinations[set].secondary[n].replace(/\s+/, "\\s+") + 
+										'[e|s|d|es|ed|ing|ting]*', //Support for multiple words.
 								'gi')
-						)
+						);
 					}
 				}
 			}
@@ -137,10 +173,12 @@ crisis.prototype.detect		=	(function(uid) {
 			
 			//For each regular expression.
 			for (var i = 0; i < this.regex[key].length; i++) { 
+				console.log(this.nodes[uid].input.value.search(this.regex[key][i]));
+				
 				//Test this string.
-				if (this.nodes[uid].input.value.search(this.regex[key][i]) > 0) {
+				if (this.nodes[uid].input.value.search(this.regex[key][i]) > -1) {
 					//Create a prompt.
-					if (confirm(crisis.helpString[key])) {
+					if (confirm(crisis.template.trim() + ' ' + crisis.helpString[key])) {
 						//Open a new window and focus. 
 						window.open(crisis.redirects[key], '_blank').focus();
 					}

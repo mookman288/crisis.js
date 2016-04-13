@@ -67,7 +67,7 @@ gulp.task('browserSync', function() {
 		    './dist/crisis.min.js'
 		], 
 		open: false, 
-		port: 3333, 
+		port: 999, 
 		server: {
 			baseDir: "./", 
 		}
