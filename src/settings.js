@@ -2,7 +2,7 @@
 crisis.prototype.automatic	=	true;
 
 //Which inputs should be watched. 
-crisis.prototype.inputs		=	['input[type=text]', 'textarea'];
+crisis.prototype.inputs		=	['input[type=text]', 'search', 'textarea'];
 
 //Which strings should be searched for. 
 crisis.prototype.search		=	{
