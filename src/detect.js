@@ -11,8 +11,6 @@ crisis.prototype.detect		=	(function(uid) {
 			
 			//For each regular expression.
 			for (var i = 0; i < this.regex[key].length; i++) { 
-				console.log(this.nodes[uid].input.value.search(this.regex[key][i]));
-				
 				//Test this string.
 				if (this.nodes[uid].input.value.search(this.regex[key][i]) > -1) {
 					//Create a prompt.
@@ -106,11 +104,23 @@ crisis.prototype.generate	=	(function() {
  * Finds and gets all nodes that are defined to be searched. 
  */
 crisis.prototype.getNodes	=	(function() {
+	//Declare variables.
+	var	nodes	=	[];
+	
 	//For each type of input that needs to be searched.
-	for (var i = 0; i < this.inputs.length; i++) {
-		//Get all nodes.
-		return document.querySelectorAll(this.inputs[i]);
+	for (var i = 0; i < this.inputs.length; i++) { 
+		//Get all of these nodes.
+		var	all	=	document.querySelectorAll(this.inputs[i]);
+		
+		//For each node.
+		for (var n = 0; n < all.length; n++) {
+			//Add these nodes.
+			nodes.push(all[n]);
+		}
 	}
+	
+	//Return nodes.
+	return nodes;
 });
 
 /**
@@ -118,10 +128,10 @@ crisis.prototype.getNodes	=	(function() {
  */
 crisis.prototype.process	=	(function(nodes) {
 	//Get all nodes. 
-	var	nodes		=	this.getNodes();
+	var	nodes		=	this.getNodes(); 
 	
 	//For each node.
-	for (var n = 0; n < nodes.length; n++) {
+	for (var n = 0; n < nodes.length; n++) { 
 		//Generate a new UID.
 		var	uid		=	this.generate();
 		

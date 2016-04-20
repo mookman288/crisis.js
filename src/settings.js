@@ -1,3 +1,6 @@
+//Instantiation notice.
+crisis.prototype.helloworld	=	"crisis.js successfully instantiated.";
+
 //Automatically add a handler to watch all specified inputs. 
 crisis.prototype.automatic	=	true;
 
