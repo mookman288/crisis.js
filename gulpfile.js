@@ -16,8 +16,31 @@ var	argv		=	require('yargs').argv;
 //Check if this is a development version. 
 var	dev			=	(!argv.dev) ? false : true;
 
+//Location of the source files.
+var	src			=	'./src/';
+
+//Location of the distribution files.
+var	dist		=	'./dist/';
+
+//Collection of all languages.
+var	langs		=	['en'];
+
 //Collection of all JavaScript files.
-var	files		=	['./src/crisis.js', './src/settings.js', './src/regex.js', './src/detect.js', './src/register.js'];
+var	files		=	['crisis.js', 'settings.js', 'regex.js', 'detect.js'];
+
+//Set the default tasks.
+var	tasks		=	{
+		'prod': ['hint', 'js'] + langs, 
+		'dev': ['hint', 'js'] + langs + ['browserSync', 'watch'], 
+		'compress': ['compress']
+}
+
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Create a task set for this language.
+	tasks[langs[i] + '-dev']	=	['hint', langs[i], 'js'];
+	tasks[langs[i]]				=	['hint', langs[i], 'js', 'browserSync', 'watch'];
+}
 
 //Hint JavaScript.
 gulp.task('hint', function() {
@@ -44,14 +67,26 @@ gulp.task('hint', function() {
 
 //Compile JavaScript. 
 gulp.task('js', function() {
-	return gulp.src(files)
+	return gulp.src(files.map(function(a) {
+		return src + a + '.js'
+	}))
 		.pipe(concat('crisis.js'))
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest(dist));
 });
 
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Create a task for this language.
+	gulp.task(langs[i], ['js'], function() {
+		return gulp.src([src + 'crisis.js', src + langs[i] + '.js'])
+			.pipe(concat('crisis.' + langs[i] + '.js'))
+			.pipe(gulp.dest(dist));
+	});
+}
+
 //Compress JavaScript.
-gulp.task('compress', function() {
-	return gulp.src('./dist/crisis.js')
+gulp.task('compress', ['js'], function() {
+	return gulp.src(dist + '**/*.js')
 		.pipe(gulpif(!dev, uglify({'preserveComments': 'license'})))
 		.pipe(rename({
 			suffix: '.min'
@@ -64,10 +99,10 @@ gulp.task('browserSync', function() {
 	browserSync.init({
 		files: [
 		    './*.html', 
-		    './dist/crisis.min.js'
+		    dist + '*.js'
 		], 
 		open: false, 
-		port: 999, 
+		port: 9999, 
 		server: {
 			baseDir: "./", 
 		}
@@ -82,9 +117,22 @@ gulp.task('watch', function() {
 	//Setup watch for JavaScript.
 	gulp.watch('./src/**/*.js', ['js']);
 	
+	//For each language.
+	
+	
 	//Setup watch for Compress.
 	gulp.watch('./dist/**/*.js', ['compress']);
 });
 
-//Task runner. 
-gulp.task('default', (!dev) ? ['hint', 'js', 'compress'] : ['hint', 'js', 'compress', 'browserSync', 'watch']);
+
+//Task runner for all languages.
+gulp.task('default', (!dev) ? tasks.prod, tasks.dev);
+
+//Task runner for compression.
+gulp.task('compress', tasks.compress);
+
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Task runner for this language.
+	gulp.task(langs[i], (!dev) ? tasks[langs[i]], tasks[langs[i] + '-dev']);
+}
