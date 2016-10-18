@@ -128,7 +128,7 @@ crisis.prototype.getNodes	=	(function() {
  */
 crisis.prototype.process	=	(function(nodes) {
 	//Get all nodes. 
-	var	nodes		=	this.getNodes(); 
+	nodes		=	this.getNodes(); 
 	
 	//For each node.
 	for (var n = 0; n < nodes.length; n++) { 

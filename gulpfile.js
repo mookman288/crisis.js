@@ -16,12 +16,34 @@ var	argv		=	require('yargs').argv;
 //Check if this is a development version. 
 var	dev			=	(!argv.dev) ? false : true;
 
+//Location of the source files.
+var	src			=	'./src/';
+
+//Location of the distribution files.
+var	dist		=	'./dist/';
+
+//Collection of all languages.
+var	langs		=	['en'];
+
 //Collection of all JavaScript files.
-var	files		=	['./src/crisis.js', './src/settings.js', './src/regex.js', './src/detect.js', './src/register.js'];
+var	files		=	['crisis', 'settings', 'regex', 'detect'];
+
+//Set the default tasks.
+var	tasks		=	{
+		'prod': ['hint', 'js'].concat(langs).concat(['compress']), 
+		'dev': ['hint', 'js'].concat(langs).concat(['browserSync', 'watch', 'compress'])
+}
+
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Create a task set for this language.
+	tasks[langs[i] + '-dev']	=	['hint', langs[i], 'js', 'compress'];
+	tasks[langs[i]]				=	['hint', langs[i], 'js', 'browserSync', 'watch', 'compress'];
+}
 
 //Hint JavaScript.
 gulp.task('hint', function() {
-	return gulp.src(['/src/**/*.js'])
+	return gulp.src([src + '**/*.js'])
 		.pipe(jshint())
 		.pipe(notify(function(file) {
 			//If not success.
@@ -44,30 +66,45 @@ gulp.task('hint', function() {
 
 //Compile JavaScript. 
 gulp.task('js', function() {
-	return gulp.src(files)
+	return gulp.src(files.map(function(a) {
+		return src + a + '.js'
+	}))
 		.pipe(concat('crisis.js'))
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest(dist));
 });
 
 //Compress JavaScript.
-gulp.task('compress', function() {
-	return gulp.src('./dist/crisis.js')
+gulp.task('compress', ['js'], function() {
+	return gulp.src(dist + '*.js')
 		.pipe(gulpif(!dev, uglify({'preserveComments': 'license'})))
 		.pipe(rename({
 			suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./dist/min'));
 });
+
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Set the language in a variable.
+	var	lang	=	langs[i];
+	
+	//Create a task for this language.
+	gulp.task(langs[i], ['js'], function() { console.log(lang);
+		return gulp.src([dist + 'crisis.js', src + 'langs/' + lang + '.js'])
+			.pipe(concat('crisis.' + lang + '.js'))
+			.pipe(gulp.dest(dist));
+	}.bind(lang));
+}
 
 //BrowserSync.
 gulp.task('browserSync', function() {
 	browserSync.init({
 		files: [
 		    './*.html', 
-		    './dist/crisis.min.js'
+		    dist + '*.js'
 		], 
 		open: false, 
-		port: 999, 
+		port: 9999, 
 		server: {
 			baseDir: "./", 
 		}
@@ -77,14 +114,26 @@ gulp.task('browserSync', function() {
 //Watch for changes.
 gulp.task('watch', function() {
 	//Setup watch for hinting.
-	gulp.watch('./src/**/*.js', ['hint']);
+	gulp.watch(src + '**/*.js', ['hint']);
 	
 	//Setup watch for JavaScript.
-	gulp.watch('./src/**/*.js', ['js']);
+	gulp.watch(src + '**/*.js', ['js']);
 	
-	//Setup watch for Compress.
-	gulp.watch('./dist/**/*.js', ['compress']);
+	//For each language.
+	for (var i = 0; i < langs.length; i++) {
+		//Setup watch for the language.
+		gulp.watch([dist + '*.js', src + 'langs/' + langs[i] + '.js'], [langs[i]]);
+	}
+	
+	//Setup watch for compression.
+	gulp.watch(dist + '**/*.js', ['compress']);
 });
 
-//Task runner. 
-gulp.task('default', (!dev) ? ['hint', 'js', 'compress'] : ['hint', 'js', 'compress', 'browserSync', 'watch']);
+//Task runner for all languages.
+gulp.task('default', (!dev) ? tasks.prod : tasks.dev);
+
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Task runner for this language.
+	gulp.task('lang-' + langs[i], (!dev) ? tasks[langs[i]] : tasks[langs[i] + '-dev']);
+}
