@@ -122,7 +122,7 @@ gulp.task('watch', function() {
 	//For each language.
 	for (var i = 0; i < langs.length; i++) {
 		//Setup watch for the language.
-		gulp.watch(src + 'langs/' + langs[i] + '.js', [langs[i]]);
+		gulp.watch([dist + '*.js', src + 'langs/' + langs[i] + '.js'], [langs[i]]);
 	}
 	
 	//Setup watch for compression.

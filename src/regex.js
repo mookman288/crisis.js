@@ -36,9 +36,9 @@ crisis.prototype.buildRegex	=	(function() {
 		//If there are strings.
 		if (typeof this.search[key].strings === 'object') {
 			//For each string.
-			for (var i = 0; i < this.search[key].strings.length; i++) {
+			for (var ii = 0; ii < this.search[key].strings.length; ii++) {
 				//Add the regular expression to list of regular expressions. 
-				this.regex[key].push(new RegExp(this.search[key].strings[i].replace(/\s+/, "\\s+"), 'i'));
+				this.regex[key].push(new RegExp(this.search[key].strings[ii].replace(/\s+/, "\\s+"), 'i'));
 			}
 		}
 	}

@@ -6,11 +6,11 @@
  * @copyright	2016 PxO Ink. Some Rights Reserved. 
  */
 
-//Use strict mode.
-'use strict';
-
 //Instantiate crisis.
 var	crisis	=	function(settings) {
+	//Use strict mode.
+	'use strict';
+	
 	//If the settings object was passed in. 
 	if (typeof settings === 'object') {
 		//For each setting.
@@ -29,25 +29,9 @@ var	crisis	=	function(settings) {
 	//If the system should automatically begin.
 	if (this.automatic) this.process();
 	
-	//If there is a hello world notice.
-	if (this.helloworld.length > 0) {
-		//Based on availability.
-		if (typeof Challah !== 'object') {
-			//Log message.
-			console.log("%c%s", "color: blue", this.helloworld);
-		} else {
-			//Log message.
-			Challah.log(this.helloworld, "blue");
-		}
-	}
-	
 	//Return this.
 	return this;
-}
-
-//Instantiation notice.
-crisis.prototype.helloworld	=	"crisis.js successfully instantiated.";
-
+};
 //Automatically add a handler to watch all specified inputs. 
 crisis.prototype.automatic	=	true;
 
@@ -101,9 +85,9 @@ crisis.prototype.buildRegex	=	(function() {
 		//If there are strings.
 		if (typeof this.search[key].strings === 'object') {
 			//For each string.
-			for (var i = 0; i < this.search[key].strings.length; i++) {
+			for (var ii = 0; ii < this.search[key].strings.length; ii++) {
 				//Add the regular expression to list of regular expressions. 
-				this.regex[key].push(new RegExp(this.search[key].strings[i].replace(/\s+/, "\\s+"), 'i'));
+				this.regex[key].push(new RegExp(this.search[key].strings[ii].replace(/\s+/, "\\s+"), 'i'));
 			}
 		}
 	}
@@ -239,7 +223,7 @@ crisis.prototype.getNodes	=	(function() {
  */
 crisis.prototype.process	=	(function(nodes) {
 	//Get all nodes. 
-	var	nodes		=	this.getNodes(); 
+	nodes		=	this.getNodes(); 
 	
 	//For each node.
 	for (var n = 0; n < nodes.length; n++) { 
