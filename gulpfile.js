@@ -26,14 +26,14 @@ var	dist		=	'./dist/';
 var	langs		=	['en'];
 
 //Collection of all JavaScript files.
-var	files		=	['crisis.js', 'settings.js', 'regex.js', 'detect.js'];
+var	files		=	['crisis', 'settings', 'regex', 'detect'];
 
 //Set the default tasks.
 var	tasks		=	{
-		'prod': ['hint', 'js'] + langs, 
-		'dev': ['hint', 'js'] + langs + ['browserSync', 'watch'], 
-		'compress': ['compress']
+		'prod': ['hint', 'js'].concat(langs), 
+		'dev': ['hint', 'js'].concat(langs).concat(['browserSync', 'watch'])
 }
+
 
 //For each language.
 for (var i = 0; i < langs.length; i++) {
@@ -74,18 +74,8 @@ gulp.task('js', function() {
 		.pipe(gulp.dest(dist));
 });
 
-//For each language.
-for (var i = 0; i < langs.length; i++) {
-	//Create a task for this language.
-	gulp.task(langs[i], ['js'], function() {
-		return gulp.src([src + 'crisis.js', src + langs[i] + '.js'])
-			.pipe(concat('crisis.' + langs[i] + '.js'))
-			.pipe(gulp.dest(dist));
-	});
-}
-
 //Compress JavaScript.
-gulp.task('compress', ['js'], function() {
+gulp.task('compress', function() {
 	return gulp.src(dist + '**/*.js')
 		.pipe(gulpif(!dev, uglify({'preserveComments': 'license'})))
 		.pipe(rename({
@@ -93,6 +83,16 @@ gulp.task('compress', ['js'], function() {
         }))
         .pipe(gulp.dest('./dist'));
 });
+
+//For each language.
+for (var i = 0; i < langs.length; i++) {
+	//Create a task for this language.
+	gulp.task(langs[i], ['js'], function() {
+		return gulp.src([dist + 'crisis.js', src + 'langs/' + langs[i] + '.js'])
+			.pipe(concat('crisis.' + langs[i] + '.js'))
+			.pipe(gulp.dest(dist));
+	});
+}
 
 //BrowserSync.
 gulp.task('browserSync', function() {
@@ -112,27 +112,26 @@ gulp.task('browserSync', function() {
 //Watch for changes.
 gulp.task('watch', function() {
 	//Setup watch for hinting.
-	gulp.watch('./src/**/*.js', ['hint']);
+	gulp.watch(src + '**/*.js', ['hint']);
 	
 	//Setup watch for JavaScript.
-	gulp.watch('./src/**/*.js', ['js']);
+	gulp.watch(src + '**/*.js', ['js']);
 	
 	//For each language.
+	for (var i = 0; i < langs.length; i++) {
+		//Setup watch for the language.
+		gulp.watch(src + 'langs/' + langs[i] + '.js', [langs[i]]);
+	}
 	
-	
-	//Setup watch for Compress.
-	gulp.watch('./dist/**/*.js', ['compress']);
+	//Setup watch for compression.
+	gulp.watch(dist + '**/*.js', ['compress']);
 });
 
-
 //Task runner for all languages.
-gulp.task('default', (!dev) ? tasks.prod, tasks.dev);
-
-//Task runner for compression.
-gulp.task('compress', tasks.compress);
+gulp.task('default', (!dev) ? tasks.prod : tasks.dev);
 
 //For each language.
 for (var i = 0; i < langs.length; i++) {
 	//Task runner for this language.
-	gulp.task(langs[i], (!dev) ? tasks[langs[i]], tasks[langs[i] + '-dev']);
+	gulp.task('lang-' + langs[i], (!dev) ? tasks[langs[i]] : tasks[langs[i] + '-dev']);
 }
