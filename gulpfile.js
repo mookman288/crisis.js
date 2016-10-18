@@ -30,21 +30,20 @@ var	files		=	['crisis', 'settings', 'regex', 'detect'];
 
 //Set the default tasks.
 var	tasks		=	{
-		'prod': ['hint', 'js'].concat(langs), 
-		'dev': ['hint', 'js'].concat(langs).concat(['browserSync', 'watch'])
+		'prod': ['hint', 'js'].concat(langs).concat(['compress']), 
+		'dev': ['hint', 'js'].concat(langs).concat(['browserSync', 'watch', 'compress'])
 }
-
 
 //For each language.
 for (var i = 0; i < langs.length; i++) {
 	//Create a task set for this language.
-	tasks[langs[i] + '-dev']	=	['hint', langs[i], 'js'];
-	tasks[langs[i]]				=	['hint', langs[i], 'js', 'browserSync', 'watch'];
+	tasks[langs[i] + '-dev']	=	['hint', langs[i], 'js', 'compress'];
+	tasks[langs[i]]				=	['hint', langs[i], 'js', 'browserSync', 'watch', 'compress'];
 }
 
 //Hint JavaScript.
 gulp.task('hint', function() {
-	return gulp.src(['/src/**/*.js'])
+	return gulp.src([src + '**/*.js'])
 		.pipe(jshint())
 		.pipe(notify(function(file) {
 			//If not success.
@@ -75,23 +74,26 @@ gulp.task('js', function() {
 });
 
 //Compress JavaScript.
-gulp.task('compress', function() {
-	return gulp.src(dist + '**/*.js')
+gulp.task('compress', ['js'], function() {
+	return gulp.src(dist + '*.js')
 		.pipe(gulpif(!dev, uglify({'preserveComments': 'license'})))
 		.pipe(rename({
 			suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./dist/min'));
 });
 
 //For each language.
 for (var i = 0; i < langs.length; i++) {
+	//Set the language in a variable.
+	var	lang	=	langs[i];
+	
 	//Create a task for this language.
-	gulp.task(langs[i], ['js'], function() {
-		return gulp.src([dist + 'crisis.js', src + 'langs/' + langs[i] + '.js'])
-			.pipe(concat('crisis.' + langs[i] + '.js'))
+	gulp.task(langs[i], ['js'], function() { console.log(lang);
+		return gulp.src([dist + 'crisis.js', src + 'langs/' + lang + '.js'])
+			.pipe(concat('crisis.' + lang + '.js'))
 			.pipe(gulp.dest(dist));
-	});
+	}.bind(lang));
 }
 
 //BrowserSync.
