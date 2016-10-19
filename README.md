@@ -21,6 +21,12 @@ not reactivate on that input until the page is refreshed.
 
 Please refer to the `settings.js` file in the `src` directory for a complete list of settings that can be passed in. 
 
+####Languages
+
+Crisis is designed to support multiple languages. A language template file can be found in the `src/langs` directory. If you 
+plan to contribute a new language to Crisis, please follow the existing design. You will need to modify the `gulpfile.js`. 
+Please see the contribution section below. 
+
 ###Regular Expressions
 
 Combinations of sets are designed to use regular expressions to appropriately trigger help. For instance, if someone writes `I 

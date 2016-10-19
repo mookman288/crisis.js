@@ -7,10 +7,7 @@
  */
 
 //Instantiate crisis.
-var	crisis	=	function(settings) {
-	//Use strict mode.
-	'use strict';
-	
+crisis	=	function(settings) {
 	//If the settings object was passed in. 
 	if (typeof settings === 'object') {
 		//For each setting.
@@ -22,12 +19,6 @@ var	crisis	=	function(settings) {
 			this[key]		=	settings[key];
 		}
 	}
-	
-	//Build regex.
-	this.buildRegex();
-	
-	//If the system should automatically begin.
-	if (this.automatic) this.process();
 	
 	//Return this.
 	return this;

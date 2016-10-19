@@ -26,7 +26,10 @@ var	dist		=	'./dist/';
 var	langs		=	['en'];
 
 //Collection of all JavaScript files.
-var	files		=	['crisis', 'settings', 'regex', 'detect'];
+var	files		=	['crisis', 'settings', 'init', 'regex', 'detect'];
+var	filesMap	=	files.map(function(a) {
+	return src + a + '.js'
+});
 
 //Set the default tasks.
 var	tasks		=	{
@@ -66,9 +69,7 @@ gulp.task('hint', function() {
 
 //Compile JavaScript. 
 gulp.task('js', function() {
-	return gulp.src(files.map(function(a) {
-		return src + a + '.js'
-	}))
+	return gulp.src(filesMap)
 		.pipe(concat('crisis.js'))
 		.pipe(gulp.dest(dist));
 });
@@ -89,8 +90,14 @@ for (var i = 0; i < langs.length; i++) {
 	var	lang	=	langs[i];
 	
 	//Create a task for this language.
-	gulp.task(langs[i], ['js'], function() { console.log(lang);
-		return gulp.src([dist + 'crisis.js', src + 'langs/' + lang + '.js'])
+	gulp.task(langs[i], ['js'], function() {
+		//Create a copy of the existing files.
+		var	tempFiles	=	filesMap.slice();
+		
+		//Add the language file.
+		tempFiles.splice(1, 0, src + 'langs/' + lang + '.js');
+		
+		return gulp.src(tempFiles)
 			.pipe(concat('crisis.' + lang + '.js'))
 			.pipe(gulp.dest(dist));
 	}.bind(lang));
