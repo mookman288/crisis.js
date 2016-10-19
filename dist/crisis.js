@@ -7,10 +7,7 @@
  */
 
 //Instantiate crisis.
-var	crisis	=	function(settings) {
-	//Use strict mode.
-	'use strict';
-	
+crisis	=	function(settings) {
 	//If the settings object was passed in. 
 	if (typeof settings === 'object') {
 		//For each setting.
@@ -23,15 +20,10 @@ var	crisis	=	function(settings) {
 		}
 	}
 	
-	//Build regex.
-	this.buildRegex();
-	
-	//If the system should automatically begin.
-	if (this.automatic) this.process();
-	
 	//Return this.
 	return this;
 };
+
 //Automatically add a handler to watch all specified inputs. 
 crisis.prototype.automatic	=	true;
 
@@ -47,33 +39,45 @@ crisis.prototype.nodes		=	{};
 //Store all compiled regex.
 crisis.prototype.regex		=	{};
 
+//Initialization of the application. 
+crisis.prototype.init	=	function() {
+	//Build regex.
+	this.buildRegex();
+	
+	//If the system should automatically begin.
+	if (this.automatic) this.process();
+	
+	//Return this.
+	return this;
+};
+
 /**
  * Builds regular expressions for testing. 
  */
 crisis.prototype.buildRegex	=	(function() {
 	//For each search category.
-	for (var key in this.search) {
+	for (var key in this.lang.types) {
 		//Skip this iteration if the property is from prototype.
-		if (!this.search.hasOwnProperty(key)) continue;
+		if (!this.lang.types.hasOwnProperty(key)) continue;
 		
 		//Create the regular expression collection if not yet created.
 		this.regex[key]	=	this.regex[key] || [];
 		
 		//If there are combinations.
-		if (typeof this.search[key].combinations === 'object') {
+		if (typeof this.lang.types[key].combinations === 'object') {
 			//For each set of combinations.
-			for (var set = 0; set < this.search[key].combinations.length; set++) {
+			for (var set = 0; set < this.lang.types[key].combinations.length; set++) {
 				//For each primary combination.
-				for (var i = 0; i < this.search[key].combinations[set].primary.length; i++) {
+				for (var i = 0; i < this.lang.types[key].combinations[set].primary.length; i++) {
 					//For each secondary combination.
-					for (var n = 0; n < this.search[key].combinations[set].secondary.length; n++) {
+					for (var n = 0; n < this.lang.types[key].combinations[set].secondary.length; n++) {
 						//Add the regular expression to list of regular expressions. 
 						this.regex[key].push(
 								new RegExp(
-										this.search[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
+										this.lang.types[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
 										'[e|s|d|es|ed|ing|ting]*' + //Support for multiple words.
 										'\\s+' + //Any whitespace. 
-										this.search[key].combinations[set].secondary[n].replace(/\s+/, "\\s+") + 
+										this.lang.types[key].combinations[set].secondary[n].replace(/\s+/, "\\s+") + 
 										'[e|s|d|es|ed|ing|ting]*', //Support for multiple words.
 								'gi')
 						);
@@ -83,11 +87,11 @@ crisis.prototype.buildRegex	=	(function() {
 		}
 		
 		//If there are strings.
-		if (typeof this.search[key].strings === 'object') {
+		if (typeof this.lang.types[key].strings === 'object') {
 			//For each string.
-			for (var ii = 0; ii < this.search[key].strings.length; ii++) {
+			for (var ii = 0; ii < this.lang.types[key].strings.length; ii++) {
 				//Add the regular expression to list of regular expressions. 
-				this.regex[key].push(new RegExp(this.search[key].strings[ii].replace(/\s+/, "\\s+"), 'i'));
+				this.regex[key].push(new RegExp(this.lang.types[key].strings[ii].replace(/\s+/, "\\s+"), 'i'));
 			}
 		}
 	}
@@ -109,9 +113,9 @@ crisis.prototype.detect		=	(function(uid) {
 				//Test this string.
 				if (this.nodes[uid].input.value.search(this.regex[key][i]) > -1) {
 					//Create a prompt.
-					if (confirm(crisis.template.trim() + ' ' + crisis.helpString[key])) {
+					if (confirm(crisis.lang.intro.trim() + ' ' + crisis.lang.types[key].helpText)) {
 						//Open a new window and focus. 
-						window.open(crisis.redirects[key], '_blank').focus();
+						window.open(crisis.lang.types[key].redirect, '_blank').focus();
 					}
 					
 					//Deactivate this element.

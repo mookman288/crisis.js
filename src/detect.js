@@ -14,9 +14,9 @@ crisis.prototype.detect		=	(function(uid) {
 				//Test this string.
 				if (this.nodes[uid].input.value.search(this.regex[key][i]) > -1) {
 					//Create a prompt.
-					if (confirm(crisis.template.trim() + ' ' + crisis.helpString[key])) {
+					if (confirm(crisis.lang.intro.trim() + ' ' + crisis.lang.types[key].helpText)) {
 						//Open a new window and focus. 
-						window.open(crisis.redirects[key], '_blank').focus();
+						window.open(crisis.lang.types[key].redirect, '_blank').focus();
 					}
 					
 					//Deactivate this element.
