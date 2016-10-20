@@ -31,7 +31,7 @@ crisis.prototype.lang	=	{
 	'types': {
 		'suicide': {
 			//What the response string should be if a match is found. 
-			'helpText':		'is in danger of hurting themselves or committing suicide?',
+			'helpText':		'is in danger of hurting themselves or dying by suicide?',
 			//Where the prompt should take the user if they agree. 
 			'redirect':		'http://www.suicide.org/if-you-are-suicidal.html',
 			//Which strings should be searched for. 
