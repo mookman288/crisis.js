@@ -5,7 +5,7 @@ crisis.prototype.lang	=	{
 	'endings': ['en',"et","igt"], //A little bit unsure here, this should work out though 
 	'types': {
 		'suicide': {
-			'helpText':		'is in danger of hurting themselves or dying by suicide?',
+			'helpText':		'ist in Gefahr sich selbst zu verletzen?',
 			'redirect':		'http://www.suicide.org/if-you-are-suicidal.html', // German equivalent?
 			'combinations':	[
 				{
