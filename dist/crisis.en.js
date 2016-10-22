@@ -27,7 +27,9 @@ crisis	=	function(settings) {
 //The language settings file. 
 crisis.prototype.lang	=	{
 	//What the response template should be if a match is found.
-	'intro': 'Would you like help for you, or someone you know, who', 
+	'intro': 'Would you like help for you, or someone you know, who',
+	//Endings to certain word fragments, for instance, "hit" + "ting" could be identified.
+	'endings': ['e', 's', 'd', 'es', 'ed', 'ing', 'ting'], 
 	'types': {
 		'suicide': {
 			//What the response string should be if a match is found. 
@@ -143,10 +145,10 @@ crisis.prototype.buildRegex	=	(function() {
 						this.regex[key].push(
 								new RegExp(
 										this.lang.types[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
-										'[e|s|d|es|ed|ing|ting]*' + //Support for multiple words.
+										'[' + this.lang.endings.join('|') + ']*' + //Support for multiple words.
 										'\\s+' + //Any whitespace. 
 										this.lang.types[key].combinations[set].secondary[n].replace(/\s+/, "\\s+") + 
-										'[e|s|d|es|ed|ing|ting]*', //Support for multiple words.
+										'[' + this.lang.endings.join('|') + ']*', //Support for multiple words.
 								'gi')
 						);
 					}
