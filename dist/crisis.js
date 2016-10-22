@@ -75,10 +75,10 @@ crisis.prototype.buildRegex	=	(function() {
 						this.regex[key].push(
 								new RegExp(
 										this.lang.types[key].combinations[set].primary[i].replace(/\s+/, "\\s+") + 
-										'[e|s|d|es|ed|ing|ting]*' + //Support for multiple words.
+										'[' + this.lang.endings.join('|') + ']*' + //Support for multiple words.
 										'\\s+' + //Any whitespace. 
 										this.lang.types[key].combinations[set].secondary[n].replace(/\s+/, "\\s+") + 
-										'[e|s|d|es|ed|ing|ting]*', //Support for multiple words.
+										'[' + this.lang.endings.join('|') + ']*', //Support for multiple words.
 								'gi')
 						);
 					}

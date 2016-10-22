@@ -1,11 +1,13 @@
 //The language settings file. 
 crisis.prototype.lang	=	{
 	//What the response template should be if a match is found.
-	'intro': 'Would you like help for you, or someone you know, who', 
+	'intro': 'Would you like help for you, or someone you know, who',
+	//Endings to certain word fragments, for instance, "hit" + "ting" could be identified.
+	'endings': ['e', 's', 'd', 'es', 'ed', 'ing', 'ting'], 
 	'types': {
 		'suicide': {
 			//What the response string should be if a match is found. 
-			'helpText':		'is in danger of hurting themselves or committing suicide?',
+			'helpText':		'is in danger of hurting themselves or dying by suicide?',
 			//Where the prompt should take the user if they agree. 
 			'redirect':		'http://www.suicide.org/if-you-are-suicidal.html',
 			//Which strings should be searched for. 
