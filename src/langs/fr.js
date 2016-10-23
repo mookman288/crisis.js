@@ -29,14 +29,14 @@ crisis.prototype.lang	=	{
 		}, 
 		'ipv': {
 			//What the response string should be if a match is found. 
-			'helpText':		'souffre d'abus ou de violences intimes, émotionnelles ou physiques ?',
+			'helpText':		"souffre d'abus ou de violences intimes, émotionnelles ou physiques ?",
 			//Where the prompt should take the user if they agree. 
 			'redirect':		'http://www.thehotline.org/help/',
 			//Which strings should be searched for. 
 			'combinations':	[
  				{
 					'primary': ['frapp', 'batt', 'coup', 'abus', 'traqu', 'bless'],
-					'secondary': ['moi', 'me', "m'", 'elle', 'lui']
+					'secondary': ['moi', 'me', "m'", 'elle', 'lui'] // maybe need to switch primary and secondary here
 				}, 
 				{
 					'primary': ['suis', "je suis", 'est', "il est", "elle est", 'sont', "ils sont"], 
@@ -57,7 +57,7 @@ crisis.prototype.lang	=	{
 			'combinations':	[
   				{
  					'primary': ['viol', 'touch', 'tât', 'tat', 'caress'],
- 					'secondary': ['moi', 'me', "m'",  'her', 'him']
+ 					'secondary': ['moi', 'me', "m'",  'her', 'him'] // maybe need to switch primary and secondary here
  				}, 
  				{
  					'primary': ['a été', 'être', 'est'],
