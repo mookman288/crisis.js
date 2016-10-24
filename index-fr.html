@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>crisis.js</title>
+	</head>
+	<body>
+		<header>
+			<h1>crisis.js</h1>
+			<h2>Une librairie pour les sites qui rencontrent des personnes connaissant une crise</h2>
+			<h3>Démonstration</h3>
+			<form>
+				<label for="search">Recherche: </label>
+				<input id="search" type="text" placeholder="Rechercher&hellip;" />
+			</form>
+			<br />
+			<form>
+				<label for="alternative search">Alternative: </label>
+				<input id="alternative search" type="text" placeholder="Qu'est-ce qui vous trouble ?" />
+			</form>
+			<h4>Exemples</h4>
+			<h5>Français</h5>
+			<ul>
+				<li>Suicide
+					<ul>
+						<li>me blesser</li>
+						<li>se suicider</li>
+						<li>vouloir mourir</li>
+					</ul>
+				</li>
+				<li>Abus/Violence
+					<ul>
+						<li>me frappe</li>
+						<li>Je </li>
+						<li>Je suis traquée</li>
+					</ul>
+				</li>
+				<li>Agression sexuelle/Rape
+					<ul>
+						<li>elle m'a violé</li>
+						<li>il m'a violée</li>
+						<li>ils m'ont tâtée</li>
+					</ul>
+				</li>
+			</ul>
+			<h4>Ressources</h4>
+			<p>Actuellement le système est conçu pour rediriger un utilisateur vers une de ces ressources par défaut :</p>
+			<ul>
+				<li>
+					Suicide: 
+					<a href="http://www.suicide.org/if-you-are-suicidal.html" target="_blank">
+						http://www.suicide.org/if-you-are-suicidal.html
+					</a>
+				</li>
+				<li>
+					Abus/Violence:  
+					<a href="http://www.thehotline.org/help/" target="_blank">
+						http://www.thehotline.org/help/
+					</a>
+				</li>
+				<li>
+					Agression sexuelle/Viol: 
+					<a href="https://rainn.org/get-help" target="_blank">
+						https://rainn.org/get-help
+					</a>
+				</li>
+			</ul>
+		</header>
+		<footer>
+			<p>Copyright &copy; 2016 PxO Ink. Some Rights Reserved.</p>
+		</footer>
+		<script type="text/javascript" src="dist/min/crisis.en.min.js"></script>
+		<script type="text/javascript">
+			var	crisis	=	new crisis().init();
+		</script>
+	</body>
+</html>
