@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>crisis.js</title>
+	</head>
+	<body>
+		<header>
+			<h1>crisis.js</h1>
+			<h2>A library for websites that encounter individuals experiencing crisis</h2>
+			<h3>Demonstration</h3>
+			<form>
+				<label for="search">Search: </label>
+				<input id="search" type="text" placeholder="Suchen&hellip;" />
+			</form>
+			<br />
+			<form>
+				<label for="alternative search">Alternativ: </label>
+				<input id="alternative search" type="text" placeholder="Was berreitet dir Sorgen??" />
+			</form>
+			<h4>Beispiele</h4>
+			<h5>Deutsch</h5>
+			<ul>
+				<li>Selbstmord
+					<ul>
+						<li>verletzt mich</li>
+						<li>selbstmord begehen</li>
+						<li>sticht mich</li>
+					</ul>
+				</li>
+				<li>Gewalt
+					<ul>
+						<li>schl&auml;gt mich</li>
+						<li>Ich habe Angst</li>
+						<li>Ich werde gestalkt</li>
+					</ul>
+				</li>
+				<li>Sexueller Misbrauch
+					<ul>
+						<li>sie vergewaltigte mich</li>
+						<li>er vergewaltigte michme</li>
+						<li>sie fassten mich an</li>
+					</ul>
+				</li>
+			</ul>
+			<h4>Ressourcen</h4>
+			<p>Derzeit ist das System entworfen, um einen Benutzer zu einer dieser Ressourcen standardmäßig zu übermitteln:</p>
+			<ul>
+				<li>
+					Selbstmord: 
+					<a href="http://www.suicide.org/if-you-are-suicidal.html" target="_blank">
+						http://www.suicide.org/if-you-are-suicidal.html
+					</a>
+				</li>
+				<li>
+					Gewalt:  
+					<a href="http://www.thehotline.org/help/" target="_blank">
+						http://www.thehotline.org/help/
+					</a>
+				</li>
+				<li>
+					Sexueller Misbrauch: 
+					<a href="https://rainn.org/get-help" target="_blank">
+						https://rainn.org/get-help
+					</a>
+				</li>
+			</ul>
+		</header>
+		<footer>
+			<p>Copyright &copy; 2016 PxO Ink. Some Rights Reserved.</p><!--German Translation by XaoticLabs-->
+		</footer>
+		<script type="text/javascript" src="dist/min/crisis.en.min.js"></script>
+		<script type="text/javascript">
+			var	crisis	=	new crisis().init();
+		</script>
+	</body>
+</html>
