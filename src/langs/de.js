@@ -2,7 +2,7 @@
 //de_DE
 crisis.prototype.lang	=	{
 	'intro': 'Brauchst du Hilfe, oder jemand der',
-	'endings': ['en',"et","igt"], //A little bit unsure here, this should work out though 
+	'endings': ['en',"et","igt","igte"], //A little bit unsure here, this should work out though 
 	'types': {
 		'suicide': {
 			'helpText':		'ist in Gefahr sich selbst zu verletzen?',
@@ -10,7 +10,7 @@ crisis.prototype.lang	=	{
 			'combinations':	[
 				{
 					//'primary': ['töten', 'verletzen', 'stechen'], // Should the endings be included?
-					'primary': ['töt', 'verletz', 'stech'],
+					'primary': ['töt', 'verletz', 'stech', 'stich'],
 					'secondary': ['mich', 'ihn', 'ihm', 'ihr', 'sie']
 				},
 				{
@@ -29,7 +29,7 @@ crisis.prototype.lang	=	{
 			'redirect':		'http://www.thehotline.org/help/',  // German equivalent?
 			'combinations':	[
  				{
-					'primary': ['schlag', 'abstech', 'missbrauch', 'stalk', 'wehget'],
+					'primary': ['schlag', 'schläg', 'abstech', 'missbrauch', 'stalk', 'wehget'],
 					'secondary': ['mich', 'ihn', 'ihm', 'ihr', 'sie']
 				}, 
 				{
@@ -37,8 +37,8 @@ crisis.prototype.lang	=	{
 					'secondary': ['ängstlich', 'besorgt', 'erschrocken']
 				}, 
 				{
-					'primary': ['wat', 'ist'], 
-					'secondary':  ['schlag', 'abstech', 'missbrauch', 'stalk', 'wehget'],
+					'primary': ['war', 'ist'], 
+					'secondary':  ['schlag', 'abstech', 'missbrauch', 'stalk', 'gestalk', 'wehget'],
 				}
 			]
 		}, 

@@ -23,7 +23,7 @@ var	src			=	'./src/';
 var	dist		=	'./dist/';
 
 //Collection of all languages.
-var	langs		=	['en'];
+var	langs		=	['en', 'de'];
 
 //Collection of all JavaScript files.
 var	files		=	['crisis', 'settings', 'init', 'regex', 'detect'];
